@@ -76,6 +76,11 @@ public class AirlineController extends BaseController {
         return new ResponseEntity<>(flight.toResource(), HttpStatus.OK);
     }
 
+    @PutMapping("/airline/{airlineId}/flight/{flightId}")
+    public ResponseEntity<FlightResource> extendCapacity(){
+        return null;
+    }
+
     @PostMapping("/airline/{airlineId}/flight/{flightId}/ticket")
     public void buyTicket() {
 

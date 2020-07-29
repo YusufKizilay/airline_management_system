@@ -17,6 +17,8 @@ public class Flight extends BaseEntity<FlightResource> {
   @JoinColumn(name = "airline_id")
   private Airline airline;
 
+  private int capacity;
+
   public int getFlightId() {
     return flightId;
   }
@@ -31,6 +33,14 @@ public class Flight extends BaseEntity<FlightResource> {
 
   public void setAirline(Airline airline) {
     this.airline = airline;
+  }
+
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
   }
 
   @Override
