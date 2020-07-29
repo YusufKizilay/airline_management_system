@@ -1,36 +1,69 @@
 package kizilay.yusuf.airline_management_system.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import kizilay.yusuf.airline_management_system.entity.Airline;
+import kizilay.yusuf.airline_management_system.resource.AirlineResource;
+import kizilay.yusuf.airline_management_system.resource.Response;
+import kizilay.yusuf.airline_management_system.service.AirlineService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
-public class AirlineController {
+public class AirlineController extends BaseController {
 
-  @PostMapping
-  public void addAirline() {}
+  private AirlineService airlineService;
 
-  @GetMapping("/{airlineId}")
-  public void findAirline(String airlineId) {}
+  @Autowired
+  public AirlineController(AirlineService airlineService) {
+    this.airlineService = airlineService;
+  }
 
-  @PostMapping("/{airlineId}/flight")
+  @PostMapping("/airline")
+  public ResponseEntity<Response> addAirline(@RequestBody AirlineResource airlineResource) {
+    Airline airlineToAdd = Objects.nonNull(airlineResource) ? airlineResource.toEntity() : null;
+
+    if(Objects.isNull(airlineToAdd)){
+      return null;
+    }
+
+    int airlineId=airlineService.saveAirline(airlineToAdd);
+
+    return new ResponseEntity<>(new Response(airlineId,AIRLINE_RESOURCE_PARTH), HttpStatus.CREATED);
+
+  }
+
+  @GetMapping("/airline/{airlineId}")
+  public ResponseEntity<AirlineResource> findAirline(@PathVariable String airlineId) {
+    if(Objects.isNull(airlineId)){
+      return null;
+    }
+
+    Airline airline=airlineService.findAirline(Integer.valueOf(airlineId));
+
+    return new ResponseEntity<>(airline.toResource(), HttpStatus.OK);
+
+  }
+
+  @PostMapping("/airline/{airlineId}/flight")
   public void addFlight() {}
 
-  @GetMapping("/{airlineId}/flight/{flightId}")
+  @GetMapping("/airline/{airlineId}/flight/{flightId}")
   public void findFlight(String airlineId, String flightId) {}
 
-  @PostMapping("/{airlineId}/flight/{flightId}/ticket")
+  @PostMapping("/airline/{airlineId}/flight/{flightId}/ticket")
   public void buyTicket(){
 
   }
 
-  @GetMapping("/{airlineId}/flight/{flightId}/ticket/{ticketId}")
+  @GetMapping("/airline/{airlineId}/flight/{flightId}/ticket/{ticketId}")
   public void findTicket(String airlineId, String flightId, String ticketId){
 
   }
 
-  @PutMapping("/{airlineId}/flight/{flightId}/ticket/{ticketId}")
+  @PutMapping("/airline/{airlineId}/flight/{flightId}/ticket/{ticketId}")
   public void cancelTicket(){
 
   }
