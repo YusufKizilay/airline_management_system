@@ -1,5 +1,7 @@
 package kizilay.yusuf.airline_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kizilay.yusuf.airline_management_system.resource.AirlineResource;
 
 import javax.persistence.*;
@@ -65,5 +67,11 @@ public class Airline extends BaseEntity<AirlineResource> {
   @Override
   public AirlineResource toResource() {
     return new AirlineResource(this.name, this.establishmentDate);
+  }
+
+  @Override
+  @JsonIgnore
+  public int getId() {
+    return this.airlineId;
   }
 }

@@ -1,10 +1,12 @@
 package kizilay.yusuf.airline_management_system.entity;
 
+import kizilay.yusuf.airline_management_system.resource.RouteResource;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "route")
-public class Route {
+public class Route extends BaseEntity<RouteResource> {
 
     @Id
     @GeneratedValue
@@ -18,6 +20,14 @@ public class Route {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "destination_airport_id")
     private Airport destination;
+
+    public Route() {
+    }
+
+    public Route(Airport source, Airport destination) {
+        this.source = source;
+        this.destination = destination;
+    }
 
     public int getRouteId() {
         return routeId;
@@ -41,5 +51,15 @@ public class Route {
 
     public void setDestination(Airport destination) {
         this.destination = destination;
+    }
+
+    @Override
+    public int getId() {
+        return this.routeId;
+    }
+
+    @Override
+    public RouteResource toResource() {
+        return null;
     }
 }

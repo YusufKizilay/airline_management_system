@@ -1,16 +1,15 @@
 package kizilay.yusuf.airline_management_system.repository;
 
-import kizilay.yusuf.airline_management_system.entity.Airline;
+import kizilay.yusuf.airline_management_system.entity.Airport;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AirlineRepository extends BaseRepository<Airline> {
+public class AirportRepository extends BaseRepository<Airport> {
 
     @Autowired
-    public AirlineRepository(SessionFactory sessionFactory) {
+    public AirportRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
-
 }

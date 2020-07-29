@@ -31,7 +31,7 @@ public class AirportController extends BaseController {
 
         int airportId = airportService.saveAirport(airportToAdd);
 
-        return new ResponseEntity<>(new Response(airportId, AIRPORT_RESOURCE_PARTH), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response(airportId, AIRPORT_RESOURCE_PATH), HttpStatus.CREATED);
     }
 
     @GetMapping("/airport/{airportId")

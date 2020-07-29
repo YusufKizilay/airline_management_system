@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "reservation")
-public class Reservation {
+public class Ticket {
     @Id
     @GeneratedValue
     @Column(name = "reservation_id")
