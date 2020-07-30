@@ -1,7 +1,9 @@
 package kizilay.yusuf.airline_management_system.entity;
 
 
-public abstract class BaseEntity<T> {
+import java.io.Serializable;
+
+public abstract class BaseEntity<T> implements Serializable {
 
     public abstract int getId();
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import kizilay.yusuf.airline_management_system.resource.AirlineResource;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Airline extends BaseEntity<AirlineResource> {
   private Date establishmentDate;
 
   @OneToMany(mappedBy = "airline", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<Flight> flights;
+  private List<Flight> flights= new ArrayList<>();
 
   public Airline() {
   }
@@ -30,6 +31,11 @@ public class Airline extends BaseEntity<AirlineResource> {
   public Airline(String name, Date establishmentDate) {
     this.name = name;
     this.establishmentDate = establishmentDate;
+  }
+
+  public void addFlight(Flight flight){
+    this.flights.add(flight);
+    flight.setAirline(this);
   }
 
   public int getAirlineId() {

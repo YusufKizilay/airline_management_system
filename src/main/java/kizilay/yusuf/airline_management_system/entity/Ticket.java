@@ -1,33 +1,39 @@
 package kizilay.yusuf.airline_management_system.entity;
 
+import kizilay.yusuf.airline_management_system.resource.TicketResource;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "reservation")
-public class Ticket {
+@Table(name = "ticket")
+public class Ticket extends BaseEntity<TicketResource> {
     @Id
     @GeneratedValue
-    @Column(name = "reservation_id")
-    private int reservationId;
+    @Column(name = "ticket_id")
+    private int ticketId;
+
     private String passenger;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
 
-    @OneToOne
-    @JoinColumn(name = "route_id")
-    private Route route;
+    private TicketStatus ticketStatus;
 
-    private double price;
-
-    public int getReservationId() {
-        return reservationId;
+    public Ticket() {
     }
 
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+    public Ticket(String passenger) {
+        this.passenger = passenger;
+    }
+
+    public int getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(int ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getPassenger() {
@@ -46,19 +52,21 @@ public class Ticket {
         this.flight = flight;
     }
 
-    public Route getRoute() {
-        return route;
+    public TicketStatus getTicketStatus() {
+        return ticketStatus;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setTicketStatus(TicketStatus ticketStatus) {
+        this.ticketStatus = ticketStatus;
     }
 
-    public double getPrice() {
-        return price;
+    @Override
+    public int getId() {
+        return this.ticketId;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    @Override
+    public TicketResource toResource() {
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import kizilay.yusuf.airline_management_system.resource.FlightResource;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "flight")
@@ -13,11 +14,35 @@ public class Flight extends BaseEntity<FlightResource> {
   @Column(name = "flight_id")
   private int flightId;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "airline_id")
   private Airline airline;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "route_id")
+  private Route route;
+
   private int capacity;
+
+  private Date flightDate;
+
+  private double price;
+
+  public Flight() {
+  }
+
+  public Flight(int capacity, Date flightDate, double price) {
+    this.capacity = capacity;
+    this.flightDate = flightDate;
+    this.price = price;
+  }
+
+  public void extendCapacity(double rate){
+    int extension=this.capacity * (int)(rate/100);
+    this.capacity= this.capacity + extension;
+
+    this.price = this.price + (rate/100);
+  }
 
   public int getFlightId() {
     return flightId;
@@ -43,6 +68,30 @@ public class Flight extends BaseEntity<FlightResource> {
     this.capacity = capacity;
   }
 
+  public Route getRoute() {
+    return route;
+  }
+
+  public void setRoute(Route route) {
+    this.route = route;
+  }
+
+  public Date getFlightDate() {
+    return flightDate;
+  }
+
+  public void setFlightDate(Date flightDate) {
+    this.flightDate = flightDate;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
   @Override
   @JsonIgnore
   public int getId() {
@@ -51,6 +100,6 @@ public class Flight extends BaseEntity<FlightResource> {
 
   @Override
   public FlightResource toResource() {
-    return null;
+    return new FlightResource(this.capacity,this.flightDate, this.route.getRouteId(), this.price) ;
   }
 }

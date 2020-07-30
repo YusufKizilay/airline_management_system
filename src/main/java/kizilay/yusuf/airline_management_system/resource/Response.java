@@ -6,9 +6,9 @@ public class Response {
 
     private String resource;
 
-    public Response(int id, String path) {
+    public Response(int id, String resource) {
         this.id = id;
-        this.resource = path+id;
+        this.resource = resource;
     }
 
     public int getId() {

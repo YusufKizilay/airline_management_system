@@ -23,27 +23,22 @@ public class AirportController extends BaseController {
 
     @PostMapping("/airport")
     public ResponseEntity<Response> addAirport(@RequestBody AirportResource airportResource) {
-        Airport airportToAdd = Objects.nonNull(airportResource) ? airportResource.toEntity() : null;
-
-        if (Objects.isNull(airportToAdd)) {
-            return null;
-        }
+        Airport airportToAdd = airportResource.toEntity();
 
         int airportId = airportService.saveAirport(airportToAdd);
 
-        return new ResponseEntity<>(new Response(airportId, AIRPORT_RESOURCE_PATH), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response(airportId, createPath(AIRPORT_RESOURCE_PATH,airportId)), HttpStatus.CREATED);
     }
 
     @GetMapping("/airport/{airportId")
-    public ResponseEntity<AirportResource> findAirport(@PathVariable String airportId) {
-        if (Objects.isNull(airportId)) {
-            return null;
-        }
-
+    public ResponseEntity<AirportResource> findAirport(@PathVariable int airportId) {
         Airport airport = airportService.findAirport(Integer.valueOf(airportId));
 
-        return new ResponseEntity<>(airport.toResource(), HttpStatus.OK);
+        if(Objects.isNull(airport)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
+        return new ResponseEntity<>(airport.toResource(), HttpStatus.OK);
     }
 
 }

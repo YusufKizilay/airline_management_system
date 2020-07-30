@@ -61,6 +61,11 @@ public class Airport extends BaseEntity<AirportResource> {
     }
 
     @Override
+    public int getId() {
+        return this.airportId;
+    }
+
+    @Override
     public AirportResource toResource() {
         return new AirportResource(this.name, this.city, this.country);
     }

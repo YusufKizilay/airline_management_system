@@ -1,40 +1,54 @@
 package kizilay.yusuf.airline_management_system.resource;
 
-import kizilay.yusuf.airline_management_system.entity.Airport;
-import kizilay.yusuf.airline_management_system.entity.Route;
+public class RouteResource {
 
-public class RouteResource extends  BaseResource<Route> {
+    private int sourceAirportId;
 
-    private Airport source;
+    private int destinationAirportId;
 
-    private Airport destination;
+    private String sourceAirportResource;
+
+    private String destinationAirportResource;
 
     public RouteResource() {
     }
 
-    public RouteResource(Airport source, Airport destination) {
-        this.source = source;
-        this.destination = destination;
+    public RouteResource(int sourceAirportId, int destinationAirportId) {
+        this.sourceAirportId = sourceAirportId;
+        this.destinationAirportId = destinationAirportId;
+        this.sourceAirportResource="/airline_management_system/airport/"+sourceAirportId;
+        this.destinationAirportResource="/airline_management_system/airport/"+destinationAirportId;
     }
 
-    public Airport getSource() {
-        return source;
+    public int getSourceAirportId() {
+        return sourceAirportId;
     }
 
-    public void setSource(Airport source) {
-        this.source = source;
+    public void setSourceAirportId(int sourceAirportId) {
+        this.sourceAirportId = sourceAirportId;
     }
 
-    public Airport getDestination() {
-        return destination;
+    public int getDestinationAirportId() {
+        return destinationAirportId;
     }
 
-    public void setDestination(Airport destination) {
-        this.destination = destination;
+    public void setDestinationAirportId(int destinationAirportId) {
+        this.destinationAirportId = destinationAirportId;
     }
 
-    @Override
-    public Route toEntity() {
-        return new Route(this.source, this.destination);
+    public String getSourceAirportResource() {
+        return sourceAirportResource;
+    }
+
+    public void setSourceAirportResource(String sourceAirportResource) {
+        this.sourceAirportResource = sourceAirportResource;
+    }
+
+    public String getDestinationAirportResource() {
+        return destinationAirportResource;
+    }
+
+    public void setDestinationAirportResource(String destinationAirportResource) {
+        this.destinationAirportResource = destinationAirportResource;
     }
 }

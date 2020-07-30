@@ -13,12 +13,12 @@ public class Route extends BaseEntity<RouteResource> {
     @Column(name = "route_id")
     private int routeId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "source_airport_id")
+    @ManyToOne
+    @JoinColumn(name = "source_airport_id", referencedColumnName = "airport_id")
     private Airport source;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "destination_airport_id")
+    @ManyToOne
+    @JoinColumn(name = "destination_airport_id", referencedColumnName = "airport_id")
     private Airport destination;
 
     public Route() {
@@ -60,6 +60,6 @@ public class Route extends BaseEntity<RouteResource> {
 
     @Override
     public RouteResource toResource() {
-        return null;
+        return new RouteResource(this.source.getAirportId(), this.destination.getAirportId());
     }
 }
