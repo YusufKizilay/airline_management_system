@@ -17,15 +17,27 @@ public class FlightResource extends BaseResource<Flight> {
 
     private String routeResource;
 
+    private String airlineResource;
+
     public FlightResource() {
     }
 
-    public FlightResource(int capacity, Date flightDate, int routeId, double price ) {
+    public FlightResource(int capacity, Date flightDate, int routeId, double price, int airlineId ) {
         this.capacity = capacity;
         this.flightDate = flightDate;
         this.routeId = routeId;
         this.price = price;
         this.routeResource = "/airline_management_system/route/" + routeId ;
+        this.airlineResource="/airline_management_system/airline/"+ airlineId;
+    }
+
+    public FlightResource(Flight flight) {
+        this.capacity = flight.getCapacity();
+        this.flightDate = flight.getFlightDate();
+        this.routeId = flight.getRoute().getRouteId();
+        this.price = flight.getPrice();
+        this.routeResource = "/airline_management_system/route/" + this.routeId ;
+        this.airlineResource="/airline_management_system/airline/"+ flight.getAirline().getAirlineId();
     }
 
     public int getCapacity() {
@@ -66,6 +78,14 @@ public class FlightResource extends BaseResource<Flight> {
 
     public void setRouteResource(String routeResource) {
         this.routeResource = routeResource;
+    }
+
+    public String getAirlineResource() {
+        return airlineResource;
+    }
+
+    public void setAirlineResource(String airlineResource) {
+        this.airlineResource = airlineResource;
     }
 
     @Override

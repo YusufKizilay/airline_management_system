@@ -14,18 +14,24 @@ public class Ticket extends BaseEntity<TicketResource> {
 
     private String passenger;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
 
+    @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credit_card_id")
+    private CreditCard creditCard;
 
     public Ticket() {
     }
 
-    public Ticket(String passenger) {
+    public Ticket(String passenger, CreditCard creditCard) {
         this.passenger = passenger;
+        this.creditCard = creditCard;
     }
 
     public int getTicketId() {
@@ -60,6 +66,14 @@ public class Ticket extends BaseEntity<TicketResource> {
         this.ticketStatus = ticketStatus;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
     @Override
     public int getId() {
         return this.ticketId;
@@ -67,6 +81,6 @@ public class Ticket extends BaseEntity<TicketResource> {
 
     @Override
     public TicketResource toResource() {
-        return null;
+        return new TicketResource(this.passenger, this.creditCard.toResource(), this.flight.toResource(), this.ticketStatus);
     }
 }

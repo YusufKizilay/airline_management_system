@@ -89,7 +89,6 @@ public class AirlineController extends BaseController {
     public ResponseEntity<FlightResource> extendCapacity(@PathVariable int airlineId, @PathVariable int flightId, @RequestParam double extendCapacity) {
         Airline airline = airlineService.findAirline(airlineId);
 
-        //Need to optimistic lock
         Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
 
         if (Objects.isNull(flight)) {
@@ -153,7 +152,7 @@ public class AirlineController extends BaseController {
 
     @PutMapping("/airline/{airlineId}/flight/{flightId}/ticket/{ticketId}")
     public ResponseEntity<TicketResource>  cancelTicket(@PathVariable Integer airlineId, @PathVariable Integer flightId, @PathVariable Integer ticketId, @RequestParam String operation) {
-        if (!operation.equalsIgnoreCase(TicketStatus.CANCELED.name())) {
+        if (!operation.equalsIgnoreCase(TicketStatus.CANCEL.name())) {
            throw new OperationNotSupportedException("This endpoint supports only ticket cancellation operation");
         }
 
@@ -176,7 +175,7 @@ public class AirlineController extends BaseController {
             throw new TicketFlightMismatchException("Given %d flight does not match the %d ticket!",flightId,ticketId);
         }
 
-        ticket.setTicketStatus(TicketStatus.CANCELED);
+        ticket.setTicketStatus(TicketStatus.CANCEL);
 
         airlineService.updateTicket(ticket);
 

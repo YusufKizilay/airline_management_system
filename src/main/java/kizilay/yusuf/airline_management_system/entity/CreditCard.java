@@ -1,10 +1,18 @@
-package kizilay.yusuf.airline_management_system.resource;
+package kizilay.yusuf.airline_management_system.entity;
 
-import kizilay.yusuf.airline_management_system.entity.CreditCard;
+import kizilay.yusuf.airline_management_system.resource.CreditCardResource;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class CreditCardResource extends BaseResource<CreditCard> {
+@Entity
+@Table(name = "credit_card")
+public class CreditCard extends BaseEntity<CreditCardResource> {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "credit_card_id")
+    private int creditCardId;
 
     private String ownerName;
 
@@ -14,14 +22,22 @@ public class CreditCardResource extends BaseResource<CreditCard> {
 
     private String securityCode;
 
-    public CreditCardResource() {
+    public CreditCard() {
     }
 
-    public CreditCardResource(String ownerName, String cardNo, Date expirationDate, String securityCode) {
+    public CreditCard(String ownerName, String cardNo, Date expirationDate, String securityCode) {
         this.ownerName = ownerName;
         this.cardNo = cardNo;
         this.expirationDate = expirationDate;
         this.securityCode = securityCode;
+    }
+
+    public int getCreditCardId() {
+        return creditCardId;
+    }
+
+    public void setCreditCardId(int creditCardId) {
+        this.creditCardId = creditCardId;
     }
 
     public String getOwnerName() {
@@ -57,7 +73,13 @@ public class CreditCardResource extends BaseResource<CreditCard> {
     }
 
     @Override
-    public CreditCard toEntity() {
-        return new CreditCard(this.ownerName, this.cardNo, this.expirationDate,this.securityCode);
+    public int getId() {
+        return this.getCreditCardId();
+    }
+
+
+    @Override
+    public CreditCardResource toResource() {
+        return new CreditCardResource(this.ownerName, this.cardNo, this.expirationDate, this.securityCode);
     }
 }

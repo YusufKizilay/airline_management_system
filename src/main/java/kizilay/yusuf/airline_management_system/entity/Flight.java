@@ -38,10 +38,10 @@ public class Flight extends BaseEntity<FlightResource> {
   }
 
   public void extendCapacity(double rate){
-    int extension=this.capacity * (int)(rate/100);
+    int extension= (int) (this.capacity * rate)/100;
     this.capacity= this.capacity + extension;
 
-    this.price = this.price + (rate/100);
+    this.price = this.price+ (int)(this.price*rate)/100;
   }
 
   public int getFlightId() {
@@ -100,6 +100,8 @@ public class Flight extends BaseEntity<FlightResource> {
 
   @Override
   public FlightResource toResource() {
-    return new FlightResource(this.capacity,this.flightDate, this.route.getRouteId(), this.price) ;
+    //return new FlightResource(this.capacity,this.flightDate, this.route.getRouteId(), this.price) ;
+
+    return new FlightResource(this);
   }
 }

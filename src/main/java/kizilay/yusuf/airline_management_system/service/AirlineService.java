@@ -39,8 +39,8 @@ public class AirlineService {
         return this.flightRepository.find(flightId);
     }
 
-    public Flight updateFlight(final Flight flight){
-        return this.updateFlight(flight);
+    public int updateFlight(final Flight flight){
+        return this.flightRepository.update(flight);
     }
 
     public int saveTicket(final Ticket ticket) {

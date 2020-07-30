@@ -14,6 +14,6 @@ public class BaseController implements ResourcePathHelper {
 
     protected static  final String FLIGHT_RESOURCE_PATH="/airline_management_system/airline/%d/flight/%d";
 
-    protected static final String TICKET_RESOURCE_PATH="/airline/%d/flight/%d/ticket/%d";
+    protected static final String TICKET_RESOURCE_PATH="/airline_management_system/airline/%d/flight/%d/ticket/%d";
 }
 

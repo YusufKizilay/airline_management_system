@@ -30,7 +30,7 @@ public class AirportController extends BaseController {
         return new ResponseEntity<>(new Response(airportId, createPath(AIRPORT_RESOURCE_PATH,airportId)), HttpStatus.CREATED);
     }
 
-    @GetMapping("/airport/{airportId")
+    @GetMapping("/airport/{airportId}")
     public ResponseEntity<AirportResource> findAirport(@PathVariable int airportId) {
         Airport airport = airportService.findAirport(Integer.valueOf(airportId));
 

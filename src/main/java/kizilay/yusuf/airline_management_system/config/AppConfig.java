@@ -46,7 +46,6 @@ public class AppConfig {
                 "hibernate.hbm2ddl.auto", "create-drop");
         hibernateProperties.setProperty("hibernate.show_sql","true");
         hibernateProperties.setProperty("hibernate.format_sql","true");
-       // hibernateProperties.setProperty("hibernate.current_session_context_class","org.springframework.orm.hibernate5.SpringSessionContext");
 
         return hibernateProperties;
     }
