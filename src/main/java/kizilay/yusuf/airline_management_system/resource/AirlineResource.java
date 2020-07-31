@@ -5,6 +5,7 @@ import kizilay.yusuf.airline_management_system.entity.Airline;
 import java.util.Date;
 
 public class AirlineResource extends BaseResource<Airline>{
+    private static final String RESOURCE="/airline_management_system/airline/%d";
 
     private String airlineName;
 
@@ -14,9 +15,10 @@ public class AirlineResource extends BaseResource<Airline>{
     public AirlineResource() {
     }
 
-    public AirlineResource(String airlineName, Date establishmentDate) {
-        this.airlineName = airlineName;
-        this.establishmentDate = establishmentDate;
+    public AirlineResource(final Airline airline) {
+        super(RESOURCE,airline.getAirlineId());
+        this.airlineName = airline.getName();
+        this.establishmentDate = airline.getEstablishmentDate();
     }
 
     public String getAirlineName() {
@@ -39,6 +41,5 @@ public class AirlineResource extends BaseResource<Airline>{
     public Airline toEntity() {
         return new Airline(airlineName,establishmentDate);
     }
-
 
 }

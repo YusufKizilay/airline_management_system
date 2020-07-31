@@ -60,6 +60,6 @@ public class Route extends BaseEntity<RouteResource> {
 
     @Override
     public RouteResource toResource() {
-        return new RouteResource(this.source.getAirportId(), this.destination.getAirportId());
+        return new RouteResource(this);
     }
 }

@@ -1,23 +1,27 @@
 package kizilay.yusuf.airline_management_system.resource;
 
-public class RouteResource {
+import kizilay.yusuf.airline_management_system.entity.Route;
+
+public class RouteResource extends BaseResource<Route>{
+    private static final String RESOURCE="/airline_management_system/route/%d";
 
     private int sourceAirportId;
 
     private int destinationAirportId;
 
-    private String sourceAirportResource;
+    private AirportResource source;
 
-    private String destinationAirportResource;
+    private AirportResource destination;
 
     public RouteResource() {
     }
 
-    public RouteResource(int sourceAirportId, int destinationAirportId) {
-        this.sourceAirportId = sourceAirportId;
-        this.destinationAirportId = destinationAirportId;
-        this.sourceAirportResource="/airline_management_system/airport/"+sourceAirportId;
-        this.destinationAirportResource="/airline_management_system/airport/"+destinationAirportId;
+    public RouteResource(final Route route) {
+        super(RESOURCE,route.getRouteId());
+        this.sourceAirportId=route.getSource().getAirportId();
+        this.destinationAirportId=route.getDestination().getAirportId();
+        this.source= route.getSource().toResource();
+        this.destination=route.getDestination().toResource();
     }
 
     public int getSourceAirportId() {
@@ -36,19 +40,24 @@ public class RouteResource {
         this.destinationAirportId = destinationAirportId;
     }
 
-    public String getSourceAirportResource() {
-        return sourceAirportResource;
+    public AirportResource getSource() {
+        return source;
     }
 
-    public void setSourceAirportResource(String sourceAirportResource) {
-        this.sourceAirportResource = sourceAirportResource;
+    public void setSource(AirportResource source) {
+        this.source = source;
     }
 
-    public String getDestinationAirportResource() {
-        return destinationAirportResource;
+    public AirportResource getDestination() {
+        return destination;
     }
 
-    public void setDestinationAirportResource(String destinationAirportResource) {
-        this.destinationAirportResource = destinationAirportResource;
+    public void setDestination(AirportResource destination) {
+        this.destination = destination;
+    }
+
+    @Override
+    public Route toEntity() {
+        return null;
     }
 }

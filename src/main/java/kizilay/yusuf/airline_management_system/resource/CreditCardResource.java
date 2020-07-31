@@ -17,12 +17,14 @@ public class CreditCardResource extends BaseResource<CreditCard> {
     public CreditCardResource() {
     }
 
-    public CreditCardResource(String ownerName, String cardNo, Date expirationDate, String securityCode) {
-        this.ownerName = ownerName;
-        this.cardNo = cardNo;
-        this.expirationDate = expirationDate;
-        this.securityCode = securityCode;
+    public CreditCardResource(final CreditCard  creditCard) {
+        super(null,null);
+        this.ownerName=creditCard.getOwnerName();
+        this.cardNo=creditCard.getCardNo();
+        this.expirationDate=creditCard.getExpirationDate();
+        this.securityCode= creditCard.getSecurityCode();
     }
+
 
     public String getOwnerName() {
         return ownerName;

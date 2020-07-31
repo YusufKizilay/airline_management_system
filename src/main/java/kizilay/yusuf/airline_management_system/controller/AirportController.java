@@ -2,7 +2,6 @@ package kizilay.yusuf.airline_management_system.controller;
 
 import kizilay.yusuf.airline_management_system.entity.Airport;
 import kizilay.yusuf.airline_management_system.resource.AirportResource;
-import kizilay.yusuf.airline_management_system.resource.Response;
 import kizilay.yusuf.airline_management_system.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +21,12 @@ public class AirportController extends BaseController {
     }
 
     @PostMapping("/airport")
-    public ResponseEntity<Response> addAirport(@RequestBody AirportResource airportResource) {
+    public ResponseEntity<AirportResource> addAirport(@RequestBody AirportResource airportResource) {
         Airport airportToAdd = airportResource.toEntity();
 
-        int airportId = airportService.saveAirport(airportToAdd);
+        airportService.saveAirport(airportToAdd);
 
-        return new ResponseEntity<>(new Response(airportId, createPath(AIRPORT_RESOURCE_PATH,airportId)), HttpStatus.CREATED);
+        return new ResponseEntity<>(airportToAdd.toResource(), HttpStatus.CREATED);
     }
 
     @GetMapping("/airport/{airportId}")

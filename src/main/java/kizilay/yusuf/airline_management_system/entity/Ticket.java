@@ -7,6 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ticket")
 public class Ticket extends BaseEntity<TicketResource> {
+    private static final String NON_NUMERIC_REGEX="[^\\d.]";
+    private static final String EMPTY_STR="";
+    private static final String MASK_STR="*";
+
     @Id
     @GeneratedValue
     @Column(name = "ticket_id")
@@ -26,12 +30,37 @@ public class Ticket extends BaseEntity<TicketResource> {
     @JoinColumn(name = "credit_card_id")
     private CreditCard creditCard;
 
+
     public Ticket() {
     }
 
     public Ticket(String passenger, CreditCard creditCard) {
         this.passenger = passenger;
         this.creditCard = creditCard;
+    }
+
+    public void maskCreditCardNo(){
+        String cardNo = this.creditCard.getCardNo();
+        cardNo = cardNo.replaceAll(NON_NUMERIC_REGEX, EMPTY_STR);
+
+        int size = cardNo.length();
+
+        String preMaskString = cardNo.substring(0, 6);
+        String postMaskString = cardNo.substring(size - 4, size);
+
+        int countToBeMasked = size - 10;
+
+        StringBuilder builder = new StringBuilder(preMaskString);
+
+        for (int i = 0; i < countToBeMasked - 1; i++) {
+            builder.append(MASK_STR);
+        }
+
+        builder.append(postMaskString);
+
+        String masked = builder.toString();
+
+        this.creditCard.setCardNo(masked);
     }
 
     public int getTicketId() {
@@ -81,6 +110,6 @@ public class Ticket extends BaseEntity<TicketResource> {
 
     @Override
     public TicketResource toResource() {
-        return new TicketResource(this.passenger, this.creditCard.toResource(), this.flight.toResource(), this.ticketStatus);
+        return new TicketResource(this);
     }
 }

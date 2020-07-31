@@ -5,6 +5,8 @@ import kizilay.yusuf.airline_management_system.entity.TicketStatus;
 
 public class TicketResource extends BaseResource<Ticket> {
 
+    private static final String RESOURCE="/airline_management_system/airline/%d/flight/%d/ticket/%d";
+
     private String passenger;
 
     private CreditCardResource creditCard;
@@ -17,12 +19,14 @@ public class TicketResource extends BaseResource<Ticket> {
     public TicketResource() {
     }
 
-    public TicketResource(String passenger, CreditCardResource creditCard, FlightResource flightResource,TicketStatus ticketStatus) {
-        this.passenger = passenger;
-        this.creditCard = creditCard;
-        this.ticketStatus = ticketStatus;
-        this.flightResource = flightResource;
+    public TicketResource(final Ticket ticket){
+        super(RESOURCE, ticket.getFlight().getAirline().getAirlineId(), ticket.getFlight().getFlightId(), ticket.getTicketId());
+        this.passenger = ticket.getPassenger();
+        this.creditCard = ticket.getCreditCard().toResource();
+        this.ticketStatus = ticket.getTicketStatus();
+        this.flightResource = ticket.getFlight().toResource();
     }
+
 
 
     public String getPassenger() {
@@ -56,6 +60,7 @@ public class TicketResource extends BaseResource<Ticket> {
     public void setFlightResource(FlightResource flightResource) {
         this.flightResource = flightResource;
     }
+
 
     @Override
     public Ticket toEntity() {

@@ -14,7 +14,7 @@ public class Flight extends BaseEntity<FlightResource> {
   @Column(name = "flight_id")
   private int flightId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "airline_id")
   private Airline airline;
 
@@ -100,8 +100,10 @@ public class Flight extends BaseEntity<FlightResource> {
 
   @Override
   public FlightResource toResource() {
-    //return new FlightResource(this.capacity,this.flightDate, this.route.getRouteId(), this.price) ;
+    return new FlightResource(this,0);
+  }
 
-    return new FlightResource(this);
+  public FlightResource toResource(double extendCapacity) {
+    return new FlightResource(this,extendCapacity);
   }
 }

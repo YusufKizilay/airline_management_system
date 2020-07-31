@@ -4,7 +4,6 @@ import kizilay.yusuf.airline_management_system.entity.Airport;
 import kizilay.yusuf.airline_management_system.entity.Route;
 import kizilay.yusuf.airline_management_system.exception.AirportNotFoundException;
 import kizilay.yusuf.airline_management_system.exception.ArgumentMissingException;
-import kizilay.yusuf.airline_management_system.resource.Response;
 import kizilay.yusuf.airline_management_system.resource.RouteResource;
 import kizilay.yusuf.airline_management_system.service.AirportService;
 import kizilay.yusuf.airline_management_system.service.RouteService;
@@ -29,7 +28,7 @@ public class RouteController extends BaseController {
     }
 
     @PostMapping("/route")
-    public ResponseEntity<Response> addAirline(@RequestBody RouteResource routeResource) {
+    public ResponseEntity<RouteResource> addRoute(@RequestBody RouteResource routeResource) {
         int sourceAirportId = routeResource.getSourceAirportId();
         int destinationAirportId = routeResource.getDestinationAirportId();
 
@@ -45,14 +44,16 @@ public class RouteController extends BaseController {
                     Objects.isNull(sourceAirport) ? "source airport" : "destination airport");
         }
 
-        int routeId = routeService.saveRoute(new Route(sourceAirport, destinationAirport));
+        Route route= new Route(sourceAirport, destinationAirport);
 
-        return new ResponseEntity<>(new Response(routeId, createPath(ROUTE_RESOURCE_PATH,routeId)), HttpStatus.CREATED);
+        routeService.saveRoute(route);
+
+        return new ResponseEntity<>( route.toResource(), HttpStatus.CREATED);
 
     }
 
     @GetMapping("/route/{routeId}")
-    public ResponseEntity<RouteResource> findAirline(@PathVariable int routeId) {
+    public ResponseEntity<RouteResource> findRoute(@PathVariable int routeId) {
         Route route = routeService.findRoute(routeId);
 
         if(Objects.isNull(route)){

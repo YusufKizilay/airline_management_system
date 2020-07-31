@@ -80,6 +80,6 @@ public class CreditCard extends BaseEntity<CreditCardResource> {
 
     @Override
     public CreditCardResource toResource() {
-        return new CreditCardResource(this.ownerName, this.cardNo, this.expirationDate, this.securityCode);
+        return new CreditCardResource(this);
     }
 }
