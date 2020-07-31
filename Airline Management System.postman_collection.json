@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "bdaf5619-09b2-4c25-9aa7-6dd0a2eeb99b",
+		"name": "Airline Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Route",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sourceAirportId\":\"2\",\n    \"destinationAirportId\":\"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/route",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"route"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Airport (İstanbul)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"İstanbul Airport\",\n    \"city\":\"İstanbul\",\n    \"country\":\"Turkey\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airport"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Airline",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"airlineName\":\" Test airline 1\",\n    \"establishmentDate\":\"2020-01-20\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Flight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"capacity\":\"100\",\n    \"flightDate\":\"2020-01-20\",\n    \"routeId\":\"4\",\n    \"price\":100.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/19/flight",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"19",
+						"flight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find airport",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airport/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airport",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/route/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"route",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find flight",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1/flight/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1",
+						"flight",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy Ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"passenger\":\"Eren Kızılay\",\n    \"creditCard\": {\n        \"ownerName\":\"Eren Kızılay\",\n        \"cardNo\":\"4221-1611-2233-0005\",\n        \"expirationDate\":\"2020-01-20\",\n        \"securityCode\":\"123\"\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1/flight/5/ticket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1",
+						"flight",
+						"5",
+						"ticket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1/flight/5/ticket/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1",
+						"flight",
+						"5",
+						"ticket",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find airline",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extend flight capacity",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"extendCapacity\":10.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1/flight/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1",
+						"flight",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Airport(Ankara)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Ankara Airport\",\n    \"city\":\"Ankara\",\n    \"country\":\"Turkey\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airport"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Ticket",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ticketStatus\":\"CANCEL\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airline_management_system/airline/1/flight/5/ticket/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airline_management_system",
+						"airline",
+						"1",
+						"flight",
+						"5",
+						"ticket",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,7 +1,6 @@
 package kizilay.yusuf.airline_management_system.repository;
 
 import kizilay.yusuf.airline_management_system.entity.BaseEntity;
-import kizilay.yusuf.airline_management_system.entity.Ticket;
 import kizilay.yusuf.airline_management_system.exception.DatabaseOperationException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,7 +40,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
         return t.getId();
     }
 
-    public int update(T t){
+    public int update(T t) {
         Session session = null;
         Transaction tx = null;
         try {
@@ -54,7 +53,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
         } catch (Exception e) {
             tx.rollback();
 
-            throw new DatabaseOperationException("Error occured when try to update entity!",e);
+            throw new DatabaseOperationException("Error occured when try to update entity!", e);
 
         } finally {
             session.clear();
@@ -70,7 +69,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
             session = sessionFactory.openSession();
             return (T) session.get(classType, id);
         } catch (Exception e) {
-            throw new DatabaseOperationException("Error occurred when try to fetch entity!",e);
+            throw new DatabaseOperationException("Error occurred when try to fetch entity!", e);
         } finally {
             session.clear();
             session.close();

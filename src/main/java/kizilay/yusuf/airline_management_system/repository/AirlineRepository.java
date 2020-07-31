@@ -10,12 +10,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 public class AirlineRepository extends BaseRepository<Airline> {
 
-    private static final String FIND_AIRLINE="select a from Airline a left join fetch a.flights where a.airlineId = :id";
+    private static final String FIND_AIRLINE = "select a from Airline a left join fetch a.flights where a.airlineId = :id";
 
     @Autowired
     public AirlineRepository(SessionFactory sessionFactory) {
@@ -24,24 +23,22 @@ public class AirlineRepository extends BaseRepository<Airline> {
 
     @Override
     public Airline find(int id) {
-        Session session=null;
-        Airline airline=null;
+        Session session = null;
+        Airline airline = null;
 
-        try{
-            session= sessionFactory.openSession();
-            Query query= session.createQuery(FIND_AIRLINE);
-            query.setParameter("id",id);
+        try {
+            session = sessionFactory.openSession();
+            Query query = session.createQuery(FIND_AIRLINE);
+            query.setParameter("id", id);
             List<Airline> airlineList = query.list();
 
-            if(!CollectionUtils.isEmpty(airlineList)){
-                airline= airlineList.get(0);
+            if (!CollectionUtils.isEmpty(airlineList)) {
+                airline = airlineList.get(0);
 
             }
-        }
-        catch (Exception e){
-            throw new DatabaseOperationException("Error occurred when try to find airline",e);
-        }
-        finally {
+        } catch (Exception e) {
+            throw new DatabaseOperationException("Error occurred when try to find airline", e);
+        } finally {
             session.clear();
             session.close();
         }
