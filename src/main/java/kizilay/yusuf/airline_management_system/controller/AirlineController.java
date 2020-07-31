@@ -2,7 +2,9 @@ package kizilay.yusuf.airline_management_system.controller;
 
 import kizilay.yusuf.airline_management_system.entity.*;
 import kizilay.yusuf.airline_management_system.exception.*;
-import kizilay.yusuf.airline_management_system.resource.*;
+import kizilay.yusuf.airline_management_system.resource.AirlineResource;
+import kizilay.yusuf.airline_management_system.resource.FlightResource;
+import kizilay.yusuf.airline_management_system.resource.TicketResource;
 import kizilay.yusuf.airline_management_system.service.AirlineService;
 import kizilay.yusuf.airline_management_system.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,11 @@ public class AirlineController extends BaseController {
 
         flightToAdd.setRoute(route);
         Airline airline = airlineService.findAirline(airlineId);
+
+        if (Objects.isNull(airline)) {
+            throw new AirlineNotFoundException("No airline found for identifier %d. Flight can not be added.", airlineId);
+        }
+
         airline.addFlight(flightToAdd);
 
         airlineService.saveFlight(flightToAdd);
@@ -83,13 +90,7 @@ public class AirlineController extends BaseController {
 
     @PutMapping("/airline/{airlineId}/flight/{flightId}")
     public ResponseEntity<FlightResource> extendCapacity(@PathVariable int airlineId, @PathVariable int flightId, @RequestBody FlightResource flightResource) {
-        Airline airline = airlineService.findAirline(airlineId);
-
-        Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
-
-        if (Objects.isNull(flight)) {
-            throw new FlightNotFoundException("No flight is found for airline id : %d and flight id : %d", airline, flightId);
-        }
+        Flight flight = findAndCheckFlight(airlineId, flightId);
 
         flight.extendCapacity(flightResource.getExtendCapacity());
 
@@ -100,14 +101,7 @@ public class AirlineController extends BaseController {
 
     @PostMapping("/airline/{airlineId}/flight/{flightId}/ticket")
     public ResponseEntity<TicketResource> buyTicket(@PathVariable int airlineId, @PathVariable int flightId, @RequestBody TicketResource ticketResource) {
-
-        Airline airline = airlineService.findAirline(airlineId);
-
-        Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
-
-        if (Objects.isNull(flight)) {
-            throw new FlightNotFoundException("No flight is found for airline id : %d and flight id : %d", airline, flightId);
-        }
+        Flight flight = findAndCheckFlight(airlineId, flightId);
 
         Ticket ticket = ticketResource.toEntity();
 
@@ -124,14 +118,7 @@ public class AirlineController extends BaseController {
 
     @GetMapping("/airline/{airlineId}/flight/{flightId}/ticket/{ticketId}")
     public ResponseEntity<TicketResource> findTicket(@PathVariable Integer airlineId, @PathVariable Integer flightId, @PathVariable Integer ticketId) {
-
-        Airline airline = airlineService.findAirline(airlineId);
-
-        Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
-
-        if (Objects.isNull(flight)) {
-            throw new FlightNotFoundException("No flight is found for airline id : %d and flight id : %d", airline, flightId);
-        }
+        Flight flight = findAndCheckFlight(airlineId, flightId);
 
         Ticket ticket = airlineService.findTicket(ticketId);
 
@@ -155,18 +142,12 @@ public class AirlineController extends BaseController {
             throw new OperationNotSupportedException("This endpoint supports only ticket cancellation operation");
         }
 
-        Airline airline = airlineService.findAirline(airlineId);
-
-        Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
-
-        if (Objects.isNull(flight)) {
-            throw new FlightNotFoundException("No flight is found for airline id : %d and flight id : %d", airline, flightId);
-        }
+        findAndCheckFlight(airlineId, flightId);
 
         Ticket ticket = airlineService.findTicket(ticketId);
 
         if (Objects.isNull(ticket)) {
-            throw new TicketNotFoundException("No ticket is found for airline id : %d and flight id : %d and ticket id: %d", airline, flightId, ticketId);
+            throw new TicketNotFoundException("No ticket is found for airline id : %d and flight id : %d and ticket id: %d", airlineId, flightId, ticketId);
         }
 
         if (ticket.getFlight().getFlightId() != flightId) {
@@ -179,6 +160,18 @@ public class AirlineController extends BaseController {
         airlineService.updateTicket(ticket);
 
         return new ResponseEntity<>(ticket.toResource(), HttpStatus.OK);
+    }
+
+    private Flight findAndCheckFlight(Integer airlineId, Integer flightId) {
+        Airline airline = airlineService.findAirline(airlineId);
+
+        Flight flight = airline.getFlights().stream().filter(f -> f.getFlightId() == flightId).findFirst().orElse(null);
+
+        if (Objects.isNull(flight)) {
+            throw new FlightNotFoundException("No flight is found for airline id : %d and flight id : %d", airline, flightId);
+        }
+
+        return flight;
     }
 
 }

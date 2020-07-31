@@ -15,7 +15,8 @@ public class CustomControllerAdvice {
     public ResponseEntity<Error> handleCustomException(BaseException ex, WebRequest request) {
 
         if (ex instanceof RouteNotFoundException || ex instanceof FlightNotFoundException ||
-                ex instanceof TicketFlightMismatchException || ex instanceof OperationNotSupportedException) {
+                ex instanceof TicketFlightMismatchException || ex instanceof OperationNotSupportedException ||
+                ex instanceof AirportNotFoundException || ex instanceof AirlineNotFoundException) {
             return new ResponseEntity<Error>(new Error(ex), HttpStatus.BAD_REQUEST);
         } else if (ex instanceof DatabaseOperationException) {
             return new ResponseEntity<Error>(new Error(ex), HttpStatus.INTERNAL_SERVER_ERROR);
